@@ -6,18 +6,15 @@ int board[N][N];
 
 int isSafe(int row, int col) {
 
-    // Check column
     for (int i = 0; i < row; i++)
         if (board[i][col])
             return 0;
 
-    // Check left diagonal
-    for (int i = row-1, j = col-1; i >= 0 && j >= 0; i--, j--)
+    for (int i=row, j=col; i>=0 && j>=0; i--, j--)
         if (board[i][j])
             return 0;
 
-    // Check right diagonal
-    for (int i = row-1, j = col+1; i >= 0 && j < N; i--, j++)
+    for (int i=row, j=col; i>=0 && j<N; i--, j++)
         if (board[i][j])
             return 0;
 
@@ -38,27 +35,24 @@ int solve(int row) {
             if (solve(row + 1))
                 return 1;
 
-            board[row][col] = 0; // backtrack
+            board[row][col] = 0;
         }
     }
 
     return 0;
 }
 
-void printBoard() {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++)
-            printf("%d ", board[i][j]);
-        printf("\n");
-    }
-}
-
 int main() {
 
-    if (solve(0))
-        printBoard();
-    else
-        printf("No solution\n");
+    if (solve(0)) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++)
+                printf("%d ", board[i][j]);
+            printf("\n");
+        }
+    } else {
+        printf("No Solution\n");
+    }
 
     return 0;
 }
