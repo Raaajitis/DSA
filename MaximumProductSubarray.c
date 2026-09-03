@@ -1,37 +1,39 @@
 #include <stdio.h>
 
-int max(int a, int b) { return (a > b) ? a : b; }
-int min(int a, int b) { return (a < b) ? a : b; }
-
 int maxProduct(int arr[], int n) {
-
-    int maxProd = arr[0];
-    int minProd = arr[0];
+    int maxEnding = arr[0];
+    int minEnding = arr[0];
     int result = arr[0];
 
     for (int i = 1; i < n; i++) {
-
         if (arr[i] < 0) {
-            int temp = maxProd;
-            maxProd = minProd;
-            minProd = temp;
+            int temp = maxEnding;
+            maxEnding = minEnding;
+            minEnding = temp;
         }
 
-        maxProd = max(arr[i], maxProd * arr[i]);
-        minProd = min(arr[i], minProd * arr[i]);
+        if (arr[i] > maxEnding * arr[i])
+            maxEnding = arr[i];
+        else
+            maxEnding = maxEnding * arr[i];
 
-        result = max(result, maxProd);
+        if (arr[i] < minEnding * arr[i])
+            minEnding = arr[i];
+        else
+            minEnding = minEnding * arr[i];
+
+        if (maxEnding > result)
+            result = maxEnding;
     }
 
     return result;
 }
 
 int main() {
+    int arr[] = {2, 3, -2, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
-    int arr[] = {2,3,-2,4};
-    int n = sizeof(arr)/sizeof(arr[0]);
-
-    printf("Max Product: %d\n", maxProduct(arr,n));
+    printf("Maximum Product: %d\n", maxProduct(arr, n));
 
     return 0;
 }
